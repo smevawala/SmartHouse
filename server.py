@@ -2,6 +2,7 @@ from socket import *
 import threading
 import thread
 import db
+from time import sleep
 
 
 
@@ -11,12 +12,18 @@ def handler(clientsock,addr):
     print ip;
     D.IsOutlet(ip)
     while 1:
-        msg=clientsock.recv(BUFSIZ)
+        msg=clientsock.recvmsg(BUFSIZ)
+        msg=msg[0]
         if not msg:
             break
-        print 'Got', msg
+        # if msg==''
+        #     continue
+        print 'Got', str(msg)
         D.UpdatePower(ip, msg)
         clientsock.send("turn relay on")
+        # print 'sleeping'
+        # sleep(.2)
+        # print 'sleep done'
     clientsock.close()
 
 if __name__=='__main__':

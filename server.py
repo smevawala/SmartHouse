@@ -1,32 +1,50 @@
 from socket import *
-import threading
+# import threading
 import thread
 import db
-from time import sleep
+# from time import sleep
+# import sys
 
 
-
-def handler(clientsock,addr):
-    D=db.Database('db.db')
-    ip=addr[0]
-    print ip;
+def handler(clientsock, addr):
+    D = db.Database('db.db')
+    ip = addr[0]
+    print ip
     D.IsOutlet(ip)
     while 1:
-        msg=clientsock.recvmsg(BUFSIZ)
-        msg=msg[0]
-        if not msg:
-            break
-        # if msg==''
+        msg = clientsock.recv(BUFSIZ)
+        # msg=msg[0]
+        # if not msg:
+            # b
+        while msg.find("e") == -1:
+            print "last charater is", msg[-1]
+            print len(msg)
+            print 'Getting', str(msg)
+            tempmsg = clientsock.recv(BUFSIZ)
+            print tempmsg
+            msg = msg+tempmsg
         #     continue
+        # print sys.getsizeof(msg)
+        print "recieved everything"
+        msg = msg[:msg.find("e")]
         print 'Got', str(msg)
         D.UpdatePower(ip, msg)
-        clientsock.send("turn relay on")
-        # print 'sleeping'
-        # sleep(.2)
-        # print 'sleep done'
-    clientsock.close()
+        statemsg = D.GetState(ip)
+        print statemsg
+        if statemsg:
+            sm = "1"
+        else:
+            sm = "0"
+        sm = sm+'e'
+        clientsock.send(sm)
+        print sm
+    # clientsock.shutdown()
+    # clientsock.close()
+    # print "closing"
+    # clientsock, addr = serversock.accept()
+    # print '...connected from:', ip
 
-if __name__=='__main__':
+if __name__ == '__main__':
     PORT = 3000
     BUFSIZ = 4096
     # ADDR = (HOST, PORT)
@@ -43,3 +61,5 @@ if __name__=='__main__':
         # clientsock.send("turn relay on")
         # clientsock.close();
         thread.start_new_thread(handler, (clientsock, addr))
+        # sleep(12)
+        # print "still here"

@@ -8,12 +8,15 @@
 <ul data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true">
   {% for entry in entries %}
   {% if entry[2] %}
-  <li><a><h2>{{ entry[1]}}</h2> <p>{{entry[0]}}</p> <h1 class="ui-li-aside"> {{ entry [4] }} watts</h1></a><a href='#' data-rel="popup" data-position-to="window" data-transition="pop">Turn off Outlet</a></li>
+  <li><a><h2>{{ entry[1]}}</h2> <p>{{entry[0]}}</p> <h1 class="ui-li-aside"> {{ entry [4] }} watts</h1></a><a href='#/toggle/{{entry[5]}}/0' data-rel="popup" data-position-to="window" data-transition="pop">Turn off Outlet</a></li>
   {% else %}
-  <li><a><h2>{{ entry[1]}}</h2> <p>{{entry[0]}}</p> <h1 class="ui-li-aside"> {{ entry [4] }} watts</h1></a><a data-rel="popup" data-position-to="window" data-transition="pop">Turn on Outlet</a></li>
+  <li><a><h2>{{ entry[1]}}</h2> <p>{{entry[0]}}</p> <h1 class="ui-li-aside"> {{ entry [4] }} watts</h1></a><a href='#/toggle/{{entry[5]}}/1' data-rel="popup" data-position-to="window" data-transition="pop">Turn on Outlet</a></li>
   {% endif %}
   {% endfor %}
 </ul>
 {% else %}
   <h1>There are no SmartOutlets connecting to the network!</h1>
 {% endif %}
+<script>
+// setTimeout(function(){window.location.reload(1); }, 2000);
+</script>

@@ -33,10 +33,28 @@ class Database:
                 print ('Sqlite error in UpdatePower: %s' % str(err))
                 return False
 
+    def GetState(self, ip):
+        with self.conn:
+            try:
+                self.cur.execute('SELECT state1 FROM outlets where ip=(?);', [ip])
+                data = self.cur.fetchall()
+                return data[0][0]
+            except Exception, err:
+                print ('Sqlite error in GetAllMovies: %s\n' % str(err))
+
+    def UpdateState(self, rowid, state):
+        with self.conn:
+            try:
+                self.cur.execute('update outlets set state1=(?) where ROWID=(?);', [state, rowid])
+                return True
+            except Exception, err:
+                print ('Sqlite error in UpdatePower: %s' % str(err))
+                return False
+
     def GetOutlets(self):
         with self.conn:
             try:
-                self.cur.execute('SELECT * FROM outlets;')
+                self.cur.execute('SELECT *, ROWID FROM outlets;')
                 data = self.cur.fetchall()
                 return data
             except Exception, err:

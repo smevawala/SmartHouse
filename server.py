@@ -3,26 +3,27 @@ import threading
 import thread
 import db
 
-D=db.Database('db.db')
 
 
 def handler(clientsock,addr):
-    D.IsOutlet(addr)  
+    D=db.Database('db.db')
+    ip=addr[0]
+    D.IsOutlet(ip)
     while 1:
         msg=clientsock.recv(BUFSIZ)
-        if not data:
+        if not msg:
             break
         print 'Got', msg
-        D.UpdatePower(addr, msg)
+        D.UpdatePower(ip, msg)
         clientsock.send("turn relay on")
     clientsock.close()
 
 if __name__=='__main__':
-    SPORT = 3000
+    PORT = 3000
     BUFSIZ = 4096
     # ADDR = (HOST, PORT)
     serversock = socket(AF_INET, SOCK_STREAM)
-    serversock.bind((gethostname(), SPORT))
+    serversock.bind((gethostname(), PORT))
     serversock.listen(2)
 
     while 1:

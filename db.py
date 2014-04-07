@@ -18,7 +18,7 @@ class Database:
     def IsOutlet(self, ip):
         with self.conn:
             try:
-                self.cur.execute('INSERT INTO outlets VALUES(?,?,?,?,?)', [ip, 'New Outlet'+ str(random.randrange(99)),True, True ])
+                self.cur.execute('INSERT INTO outlets VALUES(?,?,?,?,?)', [ip, 'New Outlet'+ str(random.randrange(99)),True, True, 0 ])
                 return True
             except Exception, err:
                 print ('Sqlite error in IsOutlet: %s' % str(err))

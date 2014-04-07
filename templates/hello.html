@@ -1,0 +1,19 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.css" />
+<script src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0.1/jquery.mobile-1.0.1.min.js"></script>
+<title>SmartOutlet</title>
+{% if entries!=Null %}
+<ul data-role="listview" data-split-icon="gear" data-split-theme="a" data-inset="true">
+  {% for entry in entries %}
+  {% if entry[2] %}
+  <li><a><h2>{{ entry[1]}}</h2> <p>{{entry[0]}}</p> <h1 class="ui-li-aside"> {{ entry [4] }} watts</h1></a><a href='#' data-rel="popup" data-position-to="window" data-transition="pop">Turn off Outlet</a></li>
+  {% else %}
+  <li><a><h2>{{ entry[1]}}</h2> <p>{{entry[0]}}</p> <h1 class="ui-li-aside"> {{ entry [4] }} watts</h1></a><a data-rel="popup" data-position-to="window" data-transition="pop">Turn on Outlet</a></li>
+  {% endif %}
+  {% endfor %}
+</ul>
+{% else %}
+  <h1>There are no SmartOutlets connecting to the network!</h1>
+{% endif %}

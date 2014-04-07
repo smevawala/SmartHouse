@@ -33,6 +33,15 @@ class Database:
                 print ('Sqlite error in UpdatePower: %s' % str(err))
                 return False
 
+    def GetOutlets(self):
+        with self.conn:
+            try:
+                self.cur.execute('SELECT * FROM outlets;')
+                data = self.cur.fetchall()
+                return data
+            except Exception, err:
+                print ('Sqlite error in GetAllMovies: %s\n' % str(err))
+
     # def AddGenre(self, movie_id, genre_id, genre_name):
     #     with self.conn:
     #         try:

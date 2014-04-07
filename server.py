@@ -8,6 +8,7 @@ import db
 def handler(clientsock,addr):
     D=db.Database('db.db')
     ip=addr[0]
+    print ip;
     D.IsOutlet(ip)
     while 1:
         msg=clientsock.recv(BUFSIZ)

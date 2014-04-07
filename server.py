@@ -1,7 +1,9 @@
 from socket import *
 import threading
 import thread
+import db
 
+D=db.Database('db.db')
 
 
 def handler(clientsock,addr):

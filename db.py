@@ -1,5 +1,5 @@
 import sqlite3 as lite
-import rando
+import random
 
 
 class Database:

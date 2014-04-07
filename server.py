@@ -7,11 +7,13 @@ D=db.Database('db.db')
 
 
 def handler(clientsock,addr):
+    D.IsOutlet(addr)  
     while 1:
         msg=clientsock.recv(BUFSIZ)
         if not data:
             break
         print 'Got', msg
+        D.UpdatePower(addr, msg)
         clientsock.send("turn relay on")
     clientsock.close()
 

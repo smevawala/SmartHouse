@@ -10,7 +10,7 @@ class Database:
             try:
                 print "Creating Tables"
                 self.cur.execute(
-                    'CREATE TABLE IF NOT EXISTS outlets (ip VARCHAR(16) PRIMARY KEY, name VARCHAR(64) UNIQUE, state1 Boolean, state2 Boolean);')
+                    'CREATE TABLE IF NOT EXISTS outlets (ip VARCHAR(16) PRIMARY KEY, name VARCHAR(64) UNIQUE, state1 Boolean, state2 Boolean, power VARCHAR(16));')
 
             except Exception, err:
                 print ('Sqlite error creating tables: %s' % str(err))
@@ -18,13 +18,20 @@ class Database:
     def IsOutlet(self, ip):
         with self.conn:
             try:
-                self.cur.execute('INSERT INTO outlets VALUES(?,?,?,?)',
-                                 [ip, 'New Outlet'+ str(random.randrange(99)),True, True ])
+                self.cur.execute('INSERT INTO outlets VALUES(?,?,?,?,?)', [ip, 'New Outlet'+ str(random.randrange(99)),True, True ])
                 return True
             except Exception, err:
                 print ('Sqlite error in IsOutlet: %s' % str(err))
                 return False
 
+    def UpdatePower(self, ip, power):
+        with self.conn:
+            try:
+                self.cur.execute('update outlets set power=(?) where ip=(?);', [power, ip])
+                return True
+            except Exception, err:
+                print ('Sqlite error in UpdatePower: %s' % str(err))
+                return False
 
     # def AddGenre(self, movie_id, genre_id, genre_name):
     #     with self.conn:

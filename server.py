@@ -2,8 +2,6 @@ from socket import *
 # import threading
 import thread
 import db
-# from time import sleep
-# import sys
 
 
 def handler(clientsock, addr):
@@ -13,9 +11,6 @@ def handler(clientsock, addr):
     D.IsOutlet(ip)
     while 1:
         msg = clientsock.recv(BUFSIZ)
-        # msg=msg[0]
-        # if not msg:
-            # b
         while msg.find("e") == -1:
             print "last charater is", msg[-1]
             print len(msg)
@@ -23,8 +18,6 @@ def handler(clientsock, addr):
             tempmsg = clientsock.recv(BUFSIZ)
             print tempmsg
             msg = msg+tempmsg
-        #     continue
-        # print sys.getsizeof(msg)
         print "recieved everything"
         msg = msg[:msg.find("e")]
         print 'Got', str(msg)
@@ -38,16 +31,12 @@ def handler(clientsock, addr):
         sm = sm+'e'
         clientsock.send(sm)
         print sm
-    # clientsock.shutdown()
     # clientsock.close()
     # print "closing"
-    # clientsock, addr = serversock.accept()
-    # print '...connected from:', ip
 
 if __name__ == '__main__':
     PORT = 3000
     BUFSIZ = 4096
-    # ADDR = (HOST, PORT)
     serversock = socket(AF_INET, SOCK_STREAM)
     serversock.bind((gethostname(), PORT))
     serversock.listen(2)
@@ -56,10 +45,4 @@ if __name__ == '__main__':
         print 'waiting for connection...'
         clientsock, addr = serversock.accept()
         print '...connected from:', addr
-        # msg=clientsock.recv(BUFSIZ)
-        # print 'Got', msg
-        # clientsock.send("turn relay on")
-        # clientsock.close();
         thread.start_new_thread(handler, (clientsock, addr))
-        # sleep(12)
-        # print "still here"

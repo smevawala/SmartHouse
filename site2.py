@@ -4,13 +4,12 @@ import db
 app = Flask(__name__)
 
 
-
 @app.route('/')
-def hello():
+def smartapp():
     D = db.Database('db.db')
-    print "hi"
+    print "Database connected"
     entries = D.GetOutlets()
-    return render_template('hello.html', entries=entries)
+    return render_template('smartapp.html', entries=entries)
 
 
 @app.route('/toggle/<rowid>/<state>')
@@ -22,7 +21,7 @@ def toggle(rowid=None, state=None):
     print rowid, st
     D = db.Database('db.db')
     D.UpdateState(rowid, state)
-    return redirect(url_for('hello'))
+    return redirect(url_for('smartapp'))
 
 
 if __name__ == '__main__':

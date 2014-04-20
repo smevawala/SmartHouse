@@ -40,7 +40,7 @@ class Database:
                 data = self.cur.fetchall()
                 return data[0][0]
             except Exception, err:
-                print ('Sqlite error in GetAllMovies: %s\n' % str(err))
+                print ('Sqlite error in GetState: %s\n' % str(err))
 
     def UpdateState(self, rowid, state):
         with self.conn:
@@ -48,7 +48,7 @@ class Database:
                 self.cur.execute('update outlets set state1=(?) where ROWID=(?);', [state, rowid])
                 return True
             except Exception, err:
-                print ('Sqlite error in UpdatePower: %s' % str(err))
+                print ('Sqlite error in UpdateState: %s' % str(err))
                 return False
 
     def GetOutlets(self):
@@ -58,5 +58,5 @@ class Database:
                 data = self.cur.fetchall()
                 return data
             except Exception, err:
-                print ('Sqlite error in GetAllMovies: %s\n' % str(err))
+                print ('Sqlite error in GetOutlets: %s\n' % str(err))
 
